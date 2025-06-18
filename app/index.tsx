@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, SafeAreaView, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   GoogleSignin,
@@ -7,10 +7,51 @@ import {
   GoogleSigninButton,
 } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
+import {
+  BottomNavigation,
+  Text,
+  Provider as PaperProvider,
+} from "react-native-paper";
+const MusicRoute = () => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <Text>Music</Text>
+  </View>
+);
+
+const AlbumsRoute = () => (
+  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <Text>Albums</Text>
+  </View>
+);
+
+const RecentsRoute = () => (
+  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <Text>Recents</Text>
+  </View>
+);
 
 const index = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "music", title: "Music", icon: "queue-music" },
+    { key: "albums", title: "Albums", icon: "album" },
+    { key: "recents", title: "Recents", icon: "history" },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    music: MusicRoute,
+    albums: AlbumsRoute,
+    recents: RecentsRoute,
+  });
 
   GoogleSignin.configure({
     webClientId:
@@ -66,27 +107,45 @@ const index = () => {
 
   if (initializing) return null;
 
-  if (!user) {
-    return (
-      <SafeAreaView
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
-        <GoogleSigninButton
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={signIn}
-        />
-      </SafeAreaView>
-    );
-  }
-  console.log("user", user);
   return (
-    <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
-      <Text>Welcome {user.email}</Text>
-      <TouchableOpacity onPress={() => auth().signOut()}>
-        <Text>Sign-out</Text>
-      </TouchableOpacity>
-    </View>
+    <PaperProvider>
+      {!user ? (
+        <SafeAreaView
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <GoogleSigninButton
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={signIn}
+          />
+        </SafeAreaView>
+      ) : (
+        <View style={{ flex: 1 }}>
+          <View style={{ alignItems: "center", marginTop: 50 }}>
+            <Text style={{ fontSize: 20, marginBottom: 20 }}>
+              Welcome {user.email}
+            </Text>
+            <TouchableOpacity
+              onPress={() => auth().signOut()}
+              style={{
+                backgroundColor: "#FF6347",
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 5,
+              }}
+            >
+              <Text>Sign-out</Text>
+            </TouchableOpacity>
+          </View>
+
+          <BottomNavigation
+            navigationState={{ index, routes }}
+            onIndexChange={setIndex}
+            renderScene={renderScene}
+          />
+        </View>
+      )}
+    </PaperProvider>
   );
 };
 

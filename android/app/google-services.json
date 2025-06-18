@@ -12,7 +12,28 @@
           "package_name": "com.mayuripapat.MyExpoGoogleAuthApp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1073182005270-fmg68tg3ssnlmjmjvth5qangefnc14h9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mayuripapat.MyExpoGoogleAuthApp",
+            "certificate_hash": "13d1ba9c0dbbeb0c2f2469b8e9554590455ace5e"
+          }
+        },
+        {
+          "client_id": "1073182005270-numvra9i4vblnptkt851nlcruvpr4boo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mayuripapat.MyExpoGoogleAuthApp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1073182005270-83corr1lqh8g0m6du0c4s5hbt926fbg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDUHUTZ83kJLrs1DTKh8GjLVUfaBa1_sd8"
@@ -20,7 +41,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073182005270-83corr1lqh8g0m6du0c4s5hbt926fbg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
